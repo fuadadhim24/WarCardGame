@@ -8,12 +8,20 @@
 import SwiftUI
 
 struct ContentView: View {
+    
+    @State var playerCard = "card7"
+    @State var cpuCard = "card13"
+    
+    @State var playerScore:Int = 0
+    @State var cpuScore:Int = 0
+    
     var body: some View {
         ZStack {
             Image("background-plain")
                 .resizable()
                 .ignoresSafeArea()
             VStack {
+                Spacer()
                 Image("logo")
                     .resizable()
                     .scaledToFit()
@@ -21,14 +29,24 @@ struct ContentView: View {
                 Spacer()
                     .frame(height: 40)
                 HStack{
-                    Image("card2")
+                    Image(playerCard)
                     Spacer()
                         .frame(width: 60)
-                    Image("card3")
+                    Image(cpuCard)
                 }
                 Spacer()
                     .frame(height: 40)
-                Image("button")
+              
+//                Button("Deal") {
+//                    deal()
+//                }.foregroundColor(.white)
+//
+                Button(action: {
+                    deal()
+                }, label: {
+                    Image("button")
+                })
+                
                 Spacer()
                     .frame(height: 50)
                 HStack{
@@ -38,7 +56,7 @@ struct ContentView: View {
                             .foregroundColor(.white)
                         Spacer()
                             .frame(height: 14)
-                        Text("0")
+                        Text(String(playerScore))
                             .font(/*@START_MENU_TOKEN@*/.largeTitle/*@END_MENU_TOKEN@*/)
                             .foregroundColor(.white)
                     }
@@ -50,12 +68,31 @@ struct ContentView: View {
                             .foregroundColor(.white)
                         Spacer()
                             .frame(height: 14)
-                        Text("0")
+                        Text(String(cpuScore))
                             .font(/*@START_MENU_TOKEN@*/.largeTitle/*@END_MENU_TOKEN@*/)
                             .foregroundColor(.white)
                     }
                 }
+                Spacer()
             }
+        }
+    }
+    
+    func deal(){
+//        randomize the players card
+        var playerCardValue = Int.random(in: 2...14)
+        playerCard = "card" + String(playerCardValue)
+        
+//        randomize the cpu card
+        var cpuCardValue = Int.random(in: 2...14)
+        cpuCard = "card" + String(cpuCardValue)
+        
+//        update the scores
+        if(playerCardValue > cpuCardValue){
+//            add playerScore
+            playerScore += 1
+        }else if cpuCardValue > playerCardValue{
+            cpuScore += 1;
         }
     }
 }
